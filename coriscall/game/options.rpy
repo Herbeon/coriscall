@@ -29,7 +29,7 @@ define config.version = "1.0"
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
-define gui.about = _p("""Cori is just a delivery rabbit. so why is a hungry creature prank calling her, asking for food delivery in the form of paintings?
+define gui.about = _p("""Cori is just a delivery rabbit. so why is a hungry creature prank calling her, asking for food delivery at 4:33 am?
 """)
 
 

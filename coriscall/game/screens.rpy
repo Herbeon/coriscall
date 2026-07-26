@@ -4,6 +4,66 @@
 
 init offset = -1
 
+# making my own parallax code one day trust
+
+# trackcursor code from
+# https://github.com/aquapaulo/renpy-main-menu-parallax/blob/main/CODE.md
+init python:
+    import pygame 
+    import math 
+    class TrackCursor(renpy.Displayable):
+
+        def __init__(self, child, paramod, **kwargs):
+
+            super(TrackCursor, self).__init__()
+
+            self.child = renpy.displayable(child)
+            self.x = 0
+            self.y = 0
+            self.actual_x = 0
+            self.actual_y = 0
+
+            self.paramod = paramod
+            self.last_st = 0
+
+
+        def render(self, width, height, st, at):
+
+            rv = renpy.Render(width, height)
+            minimum_speed = 0.5
+            maximum_speed = 3
+            speed = 1 + minimum_speed
+            mouse_distance_x = min(maximum_speed, max(minimum_speed, (self.x - self.actual_x)))
+            mouse_distance_y = (self.y - self.actual_y)
+            if self.x is not None:
+                st_change = st - self.last_st
+
+                self.last_st = st
+                self.actual_x = math.floor(self.actual_x + ((self.x - self.actual_x) * speed * (st_change )) * self.paramod)
+                self.actual_y = math.floor(self.actual_y + ((self.y - self.actual_y) * speed * (st_change)) * self.paramod)
+
+                if mouse_distance_y <= minimum_speed:
+                    mouse_distance_y = minimum_speed
+                elif mouse_distance_y >= maximum_speed:
+                    mouse_distance_y = maximum_speed
+
+                cr = renpy.render(self.child, width, height, st, at)
+                cw, ch = cr.get_size()
+                rv.blit(cr, (self.actual_x, self.actual_y))
+
+
+            renpy.redraw(self, 0)
+            return rv
+
+        def event(self, ev, x, y, st):
+            hover = ev.type == pygame.MOUSEMOTION
+            click = ev.type == pygame.MOUSEBUTTONDOWN
+            mousefocus = pygame.mouse.get_focused()
+            if hover:
+
+                if (x != self.x) or (y != self.y) or click:
+                    self.x = -x /self.paramod
+                    self.y = -y /self.paramod
 
 ################################################################################
 ## Styles
@@ -246,14 +306,14 @@ screen quick_menu():
             style_prefix "quick"
             style "quick_menu"
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("back") action Rollback()
+            textbutton _("history") action ShowMenu('history')
+            textbutton _("skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("auto") action Preference("auto-forward", "toggle")
+            textbutton _("save") action ShowMenu('save')
+            textbutton _("q.Save") action QuickSave()
+            textbutton _("q.Load") action QuickLoad()
+            textbutton _("prefs") action ShowMenu('preferences')
 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
@@ -474,6 +534,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
                     transclude
 
     use navigation
+    #can change
 
     textbutton _("Return"):
         style "return_button"
@@ -1154,7 +1215,7 @@ screen confirm(message, yes_action, no_action):
     zorder 200
 
     style_prefix "confirm"
-
+    # change this later
     add "gui/overlay/confirm.png"
 
     frame:
