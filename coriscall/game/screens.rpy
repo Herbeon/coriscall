@@ -30,7 +30,7 @@ init python:
         def render(self, width, height, st, at):
 
             rv = renpy.Render(width, height)
-            minimum_speed = 0.5
+            minimum_speed = 0.2
             maximum_speed = 3
             speed = 1 + minimum_speed
             mouse_distance_x = min(maximum_speed, max(minimum_speed, (self.x - self.actual_x)))
@@ -410,6 +410,35 @@ style navigation_button_text:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#main-menu
 
+transform startbut(dur):
+    subpixel True
+    yoffset 0
+    xoffset -400
+    pause dur 
+    easein_elastic 1.0 xoffset 0 yoffset 0
+
+transform loadbut(dur):
+    subpixel True
+    xoffset 400
+    yoffset -400
+    pause dur 
+    easein_elastic 2.0 xoffset 0  yoffset 0
+
+transform logobut(dur):
+    subpixel True
+    xoffset -400
+    yoffset -400
+    pause dur 
+    easein_elastic 1.5 xoffset 0  yoffset 0
+
+transform spinbit:
+    subpixel True 
+
+    linear 0.75 xoffset 0 yoffset -2
+    linear 1.0 xoffset 0 yoffset 0
+
+    repeat 
+
 screen main_menu():
 
     ## This ensures that any other menu screen is replaced.
@@ -417,19 +446,39 @@ screen main_menu():
 
     add gui.main_menu_background
 
+    add TrackCursor("gui/button/startbuttonshadow.png",40)
+    add TrackCursor("gui/button/loadbuttonshadow.png",40)
+    add TrackCursor("gui/mainmenulogoshadow.png",50)
     add TrackCursor("gui/particles.png",20)
     add TrackCursor("gui/particles2.png", 5)
+
     imagebutton:
         idle "gui/button/startbutton.png"
         hover "gui/button/startbuttonh.png"
         action Start()
+        at startbut(0.2)
         alt "Start"
         focus_mask True 
     imagebutton:
         idle "gui/button/loadbutton.png"
         hover "gui/button/loadbuttonh.png"
         action ShowMenu("load")
+        at loadbut(0.2)
         alt "Load"
+        focus_mask True 
+    imagebutton:
+        idle "gui/mainmenulogo.png"
+        hover "gui/mainmenulogo.png"
+        action ShowMenu("about")
+        at logobut(0)
+        alt "About"
+        focus_mask True 
+    imagebutton:
+        idle "gui/mmcori1.png"
+        hover "gui/mmcori2.png"
+        action ShowMenu("preferences")
+        at spinbit()
+        alt "Preferences"
         focus_mask True 
     
     # ## This empty frame darkens the main menu.

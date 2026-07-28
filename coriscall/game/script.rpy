@@ -71,7 +71,7 @@ label start:
     scene bg dark
     with dissolve
     $ renpy.notify("part 1: the call")
-    jump got_best_painting_ending
+
     q "ring"
 
     q "ring ring ring"
