@@ -71,7 +71,7 @@ label start:
     scene bg dark
     with dissolve
     $ renpy.notify("part 1: the call")
-    jump half_ending
+    jump got_best_painting_ending
     q "ring"
 
     q "ring ring ring"
@@ -752,6 +752,7 @@ label got_best_painting_ending:
     show hungry hungry with smallsquish
     h "I will eat this RIGHT NOW!!"
     # eating sprite 
+    show hungry chomp with smallsquish 
     h "chomp chomp chomp"
     show hungry shocked with smallsquish
     h "WHOA!"
@@ -789,7 +790,7 @@ label successful_ending:
     show hungry smiling with smallsquish
     h "thank you very much."
     h "I will eat this RIGHT NOW!!"
-
+    show hungry chomp with smallsquish 
     h "chomp chomp chomp"
     show cori shocked with corisquish 
     c "Wait, you're physically eating the art?!"
@@ -799,7 +800,7 @@ label successful_ending:
         zoom 1.1
     h "HAHA!"
 
-    show hungry smiling with smallsquish:
+    show hungry chomp with smallsquish:
         zoom 1.0 
 
     h "chomp chomp chomp"
@@ -875,8 +876,9 @@ label successful_ending:
 label half_ending:
     show hungry neutral with smallsquish
     h "well, it's not exactly what I wanted..."
+    show hungry smiling 
     h "but I guess you can't be picky and hungry at the same time."
-
+    show hungry chomp with smallsquish 
     h "chomp chomp chomp"
 
     show hungry disgusted with smallsquish
