@@ -39,10 +39,10 @@ if (restarted > 0):
     else:
         $ tempthing += "(you even restarted [restarted] times)"
 define stars = [
-    ["you did not reach a notable ending", "you reached an ending, but it was mediocre.", "you reached a good ending!"]
-    ["you did not get anything", "you got something, but the hungry didn't like it", "the hungry liked your delivery!"]
-    ["you were extremely slow", "you were average paced", "you were speedy!"]
-    ["you were not decisive", "your decisiveness was average", "you were decisive"]
+    ["you did not reach a notable ending", "you reached an ending, but it was mediocre.", "you reached a good ending!"],
+    ["you did not get anything", "you got something, but the hungry didn't like it", "the hungry liked your delivery!"],
+    ["you were extremely slow", "you were average paced", "you were speedy!"],
+    ["you were not decisive", "your decisiveness was average", "you were decisive"],
     ["you received all the guidance", "you received some guidance", "you did it your way!"]
 ]
 

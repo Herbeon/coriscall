@@ -11,6 +11,7 @@ init offset = -1
 init python:
     import pygame 
     import math 
+    
     class TrackCursor(renpy.Displayable):
 
         def __init__(self, child, paramod, **kwargs):
@@ -431,6 +432,11 @@ transform logobut(dur):
     pause dur 
     easein_elastic 1.5 xoffset 0  yoffset 0
 
+transform grassin():
+    subpixel True
+    yoffset 100
+    easein_elastic 0.5 xoffset 0  yoffset 0
+
 transform spinbit:
     subpixel True 
 
@@ -439,18 +445,111 @@ transform spinbit:
 
     repeat 
 
+transform sidebit:
+    subpixel True
+
+    linear 1.0 xoffset -2
+    linear 1.0 xoffset 2
+
+    repeat
+
+transform rotbit:
+    subpixel True
+
+    anchor (1.0,1.0)
+    linear 2.0 rotate 3
+    linear 1.5 rotate 0
+    repeat 
+
+transform rotbit2:
+    subpixel True
+
+    anchor (0.5,0.5)
+    linear 1.0 rotate 5
+    linear 1.0 rotate 0
+    repeat 
+
+transform rotbit3:
+    subpixel True
+
+    anchor (0.5,0)
+    linear 2.0 rotate 3
+    linear 2.0 rotate -3
+    repeat 
+
+transform downbit:
+    subpixel True
+    
+    xoffset 0
+    yoffset 0
+
+    linear 1.0 yoffset -5
+    linear 0.75 yoffset 0
+    repeat 
+
+transform bdbit:
+    subpixel True
+    
+    xoffset 0
+    yoffset 0
+
+    linear 1.5 yoffset 3
+    linear 1.0 yoffset 0
+    repeat 
+
+transform brotbit:
+    subpixel True
+
+    xanchor 1.0
+    yanchor 1.0
+    linear 0.75 rotate -4
+    linear 1 rotate 0
+    repeat 
+
+
 screen main_menu():
 
     ## This ensures that any other menu screen is replaced.
     tag menu
 
     add gui.main_menu_background
+    
+    add "gui/mmshadow.png":
+        at sidebit()
 
+    add "gui/mmbackpaw2.png":
+        pos(1400,1180)
+        at rotbit()
+    
+    add "gui/mmwings.png":
+        pos(960,540)
+        at rotbit2()
+
+    add "gui/mmbody.png":
+        at bdbit()
+
+    add "gui/mmhindear.png":
+        pos(855,40)
+        at rotbit3()
+
+
+    add "gui/mmbananaarm.png":
+        pos (2040,1170)
+        at brotbit()
+
+    add "gui/mmear.png":
+        at downbit()
+
+    # add TrackCursor("gui/mmbody.png",80)
     add TrackCursor("gui/button/startbuttonshadow.png",40)
     add TrackCursor("gui/button/loadbuttonshadow.png",40)
     add TrackCursor("gui/mainmenulogoshadow.png",50)
     add TrackCursor("gui/particles.png",20)
-    add TrackCursor("gui/particles2.png", 5)
+    add TrackCursor("gui/particles2.png", 10):
+        pos(200,0)
+
+    add TrackCursor("gui/mmgrass.png",30):
+        at grassin()    
 
     imagebutton:
         idle "gui/button/startbutton.png"
