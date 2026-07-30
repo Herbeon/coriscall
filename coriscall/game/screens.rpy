@@ -465,16 +465,18 @@ transform rotbit2:
     subpixel True
 
     anchor (0.5,0.5)
-    linear 1.0 rotate 5
-    linear 1.0 rotate 0
+    linear 1.0 rotate 3
+    linear 0.5 rotate 4
+    linear 1.0 rotate 1
+    linear 0.5 rotate 0
     repeat 
 
 transform rotbit3:
     subpixel True
 
     anchor (0.5,0)
-    linear 2.0 rotate 3
-    linear 2.0 rotate -3
+    linear 2.0 rotate 2
+    linear 2.0 rotate -2
     repeat 
 
 transform downbit:
@@ -503,7 +505,7 @@ transform brotbit:
     xanchor 1.0
     yanchor 1.0
     linear 0.75 rotate -4
-    linear 1 rotate 0
+    linear 1 rotate -1
     repeat 
 
 
