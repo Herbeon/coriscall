@@ -16,7 +16,7 @@ define q = Character("???", color = "#250e6d",what_outlines=[(2,"#efedfd",0,0)])
 define hungup = 0
 define donesofar = 0
 define guided = False
-define restarted = False
+define restarted = 0
 
 define held_flyer = ""
 define held_food = ""
@@ -26,14 +26,38 @@ define finalfood = ""
 
 # badges or something:
 
+define endstar = ""
+define foodstar = ""
+define speedstar = ""
+define confidencestar = ""
+define selfstar = ""
+
+define tempthing = "you were extremely slow"
+if (restarted > 0):
+    if(restarted == 1):
+        $ tempthing += ("(you even restarted once.)")
+    else:
+        $ tempthing += "(you even restarted [restarted] times)"
+define stars = [
+    ["you did not reach a notable ending", "you reached an ending, but it was mediocre.", "you reached a good ending!"]
+    ["you did not get anything", "you got something, but the hungry didn't like it", "the hungry liked your delivery!"]
+    ["you were extremely slow", "you were average paced", "you were speedy!"]
+    ["you were not decisive", "your decisiveness was average", "you were decisive"]
+    ["you received all the guidance", "you received some guidance", "you did it your way!"]
+]
+
+define galleryspeed = "slow"
+# slow, mid or fast
+
+# "none" "half" "full"
 # one star for reachin the end
 # one star for getting something the hungry liked
-# speed done (counted by lines of dialogue clicked through??)
+# speed done (counted by lines of dialogue clicked through??) (also counts restarted stuff)
 # decisiveness (choosing to think more about tihngs, or answering "maybe")
 # independence: amount of guidance they asked for/used (mostly in the getting-painting chapter)
 
 
-# the call, the order, the pickup, the delivery, the review 
+# the call, the order, the delivery, the review 
 
 # animations
 
@@ -152,7 +176,7 @@ label from_the_beginning:
     $ global hungup
     if hungup > 1:
         jump bro_gets_hung_up_on
-    else:
+    else: 
         show hungry angry with smallsquish
         h "cori hung up??"
         show hungry smiling with smallsquish
@@ -160,6 +184,7 @@ label from_the_beginning:
     jump from_the_ringing
 
 label from_the_ringing:
+    show hungry neutral with dissolve 
     "after what felt like multiple eternities, cori finally picked up."
     h "HEY."
     if hungup > 0:
@@ -313,18 +338,24 @@ label understanding_alone:
     show cori neutral with dissolve 
     # fade 
     c "That still doesn't tell me that much, though."
-    show cori frowning
+    show cori frowning:
+        zoom 1.1
     c "Why did they have to talk in metaphors :("
-    show cori thinking 
+    show cori thinking:
+        zoom 1.2
     c "Were their requests related to the art's composition? Textures? Colours? Overall style? Are they looking for paintings? Sculptures? Music?"
-    show cori frowning 
+    show cori frowning:
+        zoom 1.3
     c "This customer is too difficult."
-    show cori neutral 
+    show cori neutral:
+        zoom 1.0
     # TIE UP
+    $ renpy.notify("part 3: the delivery")
 
 
 
 label just_go_galleria:
+    $ renpy.notify("part 3: the delivery")
     show cori thinking 
     c "The bunny said something about gallerias."
     show cori neutral 
@@ -743,8 +774,10 @@ menu think_more_or_go:
 # if they enter slow, they can only take a painting from the entrance, which is a famous one
 # medium, can get something in the middle
 # and quick, has time to go to the back and grab something (this is the only way to win through painting option, in the other two, the hungry has eaten those before?)
+# also rememebr this in case I need it later, through the gallery variable
 
 label got_best_painting_ending:
+    $ renpy.notify("part 4: the review")
     show hungry shocked with smallsquish
     h "YOU GOT IT!!"
     show hungry smiling with smallsquish
@@ -785,6 +818,7 @@ label got_best_painting_ending:
     return 
 
 label successful_ending:
+    $ renpy.notify("part 4: the review")
     show hungry shocked with smallsquish
     h "YOU GOT IT!!"
     show hungry smiling with smallsquish
@@ -874,6 +908,8 @@ label successful_ending:
 
 
 label half_ending:
+    # got not-art lol
+    $ renpy.notify("part 4: the review")
     show hungry neutral with smallsquish
     h "well, it's not exactly what I wanted..."
     show hungry smiling 
@@ -990,7 +1026,7 @@ menu try_again:
     "Yes":
         "cori will forget, but..."
         $ global restarted
-        $ restarted = True
+        $ restarted += 1
         show hungry smiling with dissolve
         h "I will remember EVERY time she's hung up on me."
         show hungry scheming with smallsquish
