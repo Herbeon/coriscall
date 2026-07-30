@@ -46,7 +46,7 @@ define stars = [
     ["you received all the guidance", "you received some guidance", "you did it your way!"]
 ]
 
-define galleryspeed = "slow"
+define galleryspeed = ""
 # slow, mid or fast
 
 # "none" "half" "full"
@@ -56,11 +56,19 @@ define galleryspeed = "slow"
 # decisiveness (choosing to think more about tihngs, or answering "maybe")
 # independence: amount of guidance they asked for/used (mostly in the getting-painting chapter)
 
+define speeddone = "fast"
+# more clicking through = becomes slow
+
+define endingdesc = ""
 
 # the call, the order, the delivery, the review 
 
 # animations
 
+
+
+
+# thank you
 
 transform smallsquish(duration = 0.1,*,new_widget=None,old_widget=None):
     delay duration 
@@ -96,6 +104,7 @@ label start:
     with dissolve
     $ renpy.notify("part 1: the call")
 
+    jump nothing_is_satisfactory
     q "ring"
 
     q "ring ring ring"
@@ -373,11 +382,12 @@ menu which_galleria:
         jump shops_galleria
 
 label named_galleria:
-    # scene
+    scene bg storeenter
     # cake, cotton candy, fried rice, onigiri, gimbap,
     show cori neutral with dissolve 
     c "Well, this is the closest Galleria."
     c "It's currently closed, but I'll just enter and leave some money on the counter."
+    scene bg store1
     show cori thinking 
     c "\"light, fluffy and whimsical\"..."
     show cori talking 
@@ -387,65 +397,90 @@ label named_galleria:
     $ lst_foods = [
         ("bread", "cross_bread"),
         ("cake", "cross_cake"),
-        ("cotton candy", "cross_cotton_candy"),
-        ("fried rice","cross_fried_rice"),
+        ("cotton_candy", "cross_cotton_candy"),
+        ("fried_rice","cross_fried_rice"),
         ("gimbap","cross_gimbap"),
         ("onigiri","cross_onigiri")
     ]
 
     jump cross_foods_out
 
+label whynoworky:
+
+
 label cross_foods_out:
     # honestly could make this a drag/drop
-    if(len(lst_foods) == 1):
-        show cori talking with corisquish 
-        c "I guess there is one remaining option."
-        $ global finalfood
-        $ finalfood = lst_foods[0][0]
-        jump one_food_to_cross
-    "{color=#fd6692}(Click a food option to cross out.){/color} Cori needs to cross out fast food, meals that would take too long to eat, and thick and heavy stuff."
-    $ global lst_foods
-    $ the_food_crossed = menu(lst_foods)
-    $ renpy.jump(the_food_crossed)
+    scene bg store
+    show cori thinking with corisquish
+    call screen foodoptions
+
+    show cori neutral with corisquish 
+    $ thechoicefood = _return 
+    show screen foodscreen(thechoicefood)
+    if (thechoicefood == "fried_rice"):
+        $ thechoicefood = "fried rice"
+    if (thechoicefood == "cotton_candy"):
+        $ thechoicefood = "cotton candy"
+    c "I guess [thechoicefood] is the one remaining option."
+    $ global finalfood
+    $ finalfood = thechoicefood
+    jump one_food_to_cross
+    # if(len(lst_foods) == 1):
+    #     show cori talking with corisquish 
+    #     c "I guess there is one remaining option."
+    #     $ global finalfood
+    #     $ finalfood = lst_foods[0][0]
+    #     if (finalfood == "fried_rice"):
+    #         $ finalfood = "fried rice"
+    #     if (finalfood == "cotton_candy"):
+    #         $ finalfood = "cotton candy"
+    #     jump one_food_to_cross
+    # else:
+    #     call screen foodoptions
+
+    # "{color=#fd6692}(Click a food option to cross out.){/color} Cori needs to cross out fast food, meals that would take too long to eat, and thick and heavy stuff."
+    # $ global lst_foods
+    # $ the_food_crossed = menu(lst_foods)
+    # $ renpy.jump(the_food_crossed)
 
 label cross_bread:
-    $ global lst_foods
-    $ lst_foods.remove(("bread","cross_bread"))
+    # $ global lst_foods
+    # $ lst_foods.remove(("bread","cross_bread"))
     show cori frowning with corisquish
     c "Yeah, I don't think bread will work."
     jump cross_foods_out
 
 label cross_cake:
-    $ global lst_foods
-    $ lst_foods.remove(("cake","cross_cake"))
+    # $ global lst_foods
+    # $ lst_foods.remove(("cake","cross_cake"))
     show cori frowning with corisquish
     c "Yeah no, the hungry bunny wouldn't like cake."
     jump cross_foods_out
 
 label cross_cotton_candy:
-    $ global lst_foods
-    $ lst_foods.remove(("cotton candy","cross_cotton_candy"))
+    # $ global lst_foods
+    # $ lst_foods.remove(("cotton_candy","cross_cotton_candy"))
     show cori frowning with corisquish
     c "I don't think cotton candy would feed a hungry soul like that one."
     jump cross_foods_out
 
 label cross_fried_rice:
-    $ global lst_foods
-    $ lst_foods.remove(("fried rice","cross_fried_rice"))
+    # $ global lst_foods
+    # $ lst_foods.remove(("fried_rice","cross_fried_rice"))
     show cori frowning with corisquish
     c "I like fried rice, but I don't think the hungry bunny would."
     jump cross_foods_out
 
 label cross_gimbap:
-    $ global lst_foods
-    $ lst_foods.remove(("gimbap","cross_gimbap"))
+    # $ global lst_foods
+    # $ lst_foods.remove(("gimbap","cross_gimbap"))
     show cori frowning with corisquish
     c "Uh huh, gimbap probably isn't what the hungry bunny wanted."
     jump cross_foods_out
 
 label cross_onigiri:
-    $ global lst_foods
-    $ lst_foods.remove(("onigiri","cross_onigiri"))
+    # $ global lst_foods
+    # $ lst_foods.remove(("onigiri","cross_onigiri"))
     show cori frowning with corisquish
     c "Mhm, onigiri wouldn't satisfy the hungry bunny."
     jump cross_foods_out
@@ -454,43 +489,106 @@ menu one_food_to_cross:
     c "Should I buy [finalfood]?"
     "Yes":
         $ held_food = finalfood
+        hide screen foodscreen 
+        scene bg storemoney
+        show cori neutral 
         c "I'll just leave some money there. Time to head back."
         jump back_from_the_galleria
     "No":
+        hide screen foodscreen 
         jump nothing_is_satisfactory
 
 label nothing_is_satisfactory:
     show cori frowning 
     c "I guess this is it. Nothing is really satisfactory."
+    scene bg flyers 
+    show cori smile
+    c "Ha... those flyers look fun. Maybe I'll take one of them home."
+    show screen takeflyers
+    "{color=#fd6692}(Click a flyer to take it.){/color}"
+    pause 
+
     # cori notices a few flyers on the way out.
     # SCENE HERE
-    c "Ha... those flyers look fun."
-    jump take_a_flyer
+    # jump take_a_flyer
 
-menu take_a_flyer:
-    c "Maybe I'll take one of them home."
-    # flyer options: advertising taste-testing/cooking job opening, group study sesh with rod, wall painting??? idk figure this out later lol (include an ugly ai generated one trust)
-    # point/click
-    "take none":
-        jump back_from_the_galleria
-    "WORK IN OUR KITCHEN":
-        $ global held_flyer
-        $ held_flyer = "kitchen"
-        jump back_from_the_galleria
-    "are you overstressed and in need of a study sesh?":
-        $ global held_flyer
-        $ held_flyer = "study"
-        jump back_from_the_galleria
-    "I WILL PAINT YOUR WALLS":
-        $ global held_flyer
-        $ held_flyer = "walls"
-        jump back_from_the_galleria
-    "Strange AI-generated poster about nothing in particular":
-        $ global held_flyer
-        $ held_flyer = "aislop"
-        jump back_from_the_galleria
+# menu take_a_flyer:
+#     c "Maybe I'll take one of them home."
+#     # flyer options: advertising taste-testing/cooking job opening, group study sesh with rod, wall painting??? idk figure this out later lol (include an ugly ai generated one trust)
+#     # point/click
+#     "take none":
+#         jump back_from_the_galleria
+#     "WORK IN OUR KITCHEN":
+#         $ global held_flyer
+#         $ held_flyer = "kitchen"
+#         jump back_from_the_galleria
+#     "are you overstressed and in need of a study sesh?":
+#         $ global held_flyer
+#         $ held_flyer = "study"
+#         jump back_from_the_galleria
+#     "I WILL PAINT YOUR WALLS":
+#         $ global held_flyer
+#         $ held_flyer = "walls"
+#         jump back_from_the_galleria
+#     "Strange AI-generated poster about nothing in particular":
+#         $ global held_flyer
+#         $ held_flyer = "aislop"
+#         jump back_from_the_galleria
+
+label jobflyer:
+    scene bg flytree
+    show cori smile
+    $ global held_flyer
+    $ held_flyer = "job"
+    hide screen takeflyers
+    show screen flyjob
+    c "I appreciate that they are telling me to get a job."
+    hide screen flyjob
+    jump back_from_the_galleria
+
+label studyflyer:
+    scene bg flytree
+    show cori smile 
+    $ global held_flyer
+    $ held_flyer = "study"
+    hide screen takeflyers
+    show screen flystudy
+    c "Looks like a cheerful and fun guy."
+    hide screen flystudy
+    jump back_from_the_galleria
+
+label designflyer:
+    scene bg flytree
+    show cori smile
+    $ global held_flyer
+    $ held_flyer = "design"
+    hide screen takeflyers
+    show screen flydesign
+    c "Graphic design appears to be their passion."
+    hide screen flydesign
+    jump back_from_the_galleria
+
+label aiflyer:
+    scene bg flytree
+    show cori smile 
+    $ global held_flyer
+    $ held_flyer = "ai"
+    hide screen takeflyers
+    show screen flyai
+
+    c "I...don't even know why someone would make this flyer."
+    hide screen flyai
+    jump back_from_the_galleria
+
+label noneflyer:
+    scene bg flytree
+    show cori neutral
+    c "I don't feel too inclined to take any of these."
+    hide screen takeflyers
+    jump back_from_the_galleria
 
 label back_from_the_galleria:
+    scene bg lightground
     show cori neutral with corisquish 
     c "Hi, hungry bunny."
     show hungry hungry with smallsquish
@@ -502,18 +600,26 @@ label back_from_the_galleria:
         # got food
         show cori talking 
         c "Yeah. I hope you like this meal. I got you some [held_food]."
-        # TIE UP
+        jump half_ending
     else:
         # got a flyr
         show cori talking 
         c "Well... I didn't get any food, because none of them seemed to fit."
+        show hungry sad 
         show cori sorry 
         c "Sorry."
         show cori neutral 
-        c "If it makes you feel better, I saw this funny flyer on my way out."
-        if held_flyer == "aislop":
+        c "If it makes you feel better, I saw this fun flyer on my way out."
+        if held_flyer == "ai":
             jump flyer_aislop
         # TIE UP
+        if held_flyer == "design":
+            jump flyer_design
+
+label flyer_design:
+    show cori smile 
+    c "It says that they need a \"grafic deziner,\" but I think they need a spell checker as well."
+
 
 label flyer_aislop:
     # special ending heh
@@ -897,8 +1003,11 @@ label successful_ending:
     scene bg dark
     with dissolve
 
+    show screen endscreen
+
+    pause
+
     return 
-    # TIE UP (idk if I will make this another node or just cliffhanger ending here)
 
     # next up: cori's creation?? cori's coeur??
     # in every timeline, the Hungry finds a way to mess with cori.
@@ -959,7 +1068,7 @@ menu which_explanation:
 
 label short_explanation:
     show hungry neutral with smallsquish
-    h "in short, I eat art. you got me food."
+    h "in short, I eat art. you got me [held_food]."
     show hungry unamused with smallsquish
     h "you're getting a zero star review."
     show cori sorry with corisquish 
@@ -972,14 +1081,22 @@ label short_explanation:
     jump try_again
 
 label long_explanation:
+    scene bg bigshock with smallsquish
     show hungry angry with smallsquish
+    show cori confused 
     h "I EAT ART, CORI!"
+    scene bg lightground 
+    show cori sorry
     show hungry unamused with smallsquish
-    h "this food contains some artistry, sure,"
+    h "this [held_food] contains some artistry, sure,"
+    scene bg bigshock with smallsquish 
     show hungry angry with smallsquish
+    show cori neutral
     h "but it's too EDIBLE for me to eat!"
+    show cori frowning 
     show hungry unamused with smallsquish 
     h "also, if you had accepted my instructions, you would know that I DON'T EAT REPEATS!"
+    scene bg lightground 
     show hungry disgusted
     show cori shocked with corisquish
     c "You never repeat a meal?"
@@ -994,6 +1111,7 @@ label long_explanation:
     show hungry yapping2 
     h "I transcend the needs of mortals."
     show cori thinking with corisquish 
+    show hungry yapping
     c "You've made me curious about your life story."
     show cori neutral 
     show hungry smiling with smallsquish
@@ -1002,7 +1120,7 @@ label long_explanation:
     h "don't worry, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
     show cori determined 
     h "I'm sure you'll learn it all."
-    scene bg dark
+    scene bg verydark
     with dissolve 
     jump try_again 
 
@@ -1046,6 +1164,12 @@ label actually_over:
     show hungry smiling with dissolve
 
     h "how unfortunate that {outlinecolor=#fd6692}{color=#c3f55b}my courier{/color}{/outlinecolor} couldn't win!"
+
+    window hide 
+    show screen endscreen 
+    with dissolve 
+
+    pause 
     return 
     # scenes
 

@@ -66,6 +66,152 @@ init python:
                     self.x = -x /self.paramod
                     self.y = -y /self.paramod
 
+
+
+default all_foods = set(("bread","cake","cotton_candy","fried_rice","gimbap","onigiri"))
+default food_pics = {
+    "bread": "images/bread.png",
+    "cake" : "images/cake.png",
+    "cotton_candy": "images/cotton_candy.png",
+    "fried_rice": "images/fried_rice.png",
+    "gimbap": "images/gimbap.png",
+    "onigiri": "images/onigiri.png"
+}
+
+default mixes = {
+    "bread": set(("cake","cotton_candy","fried_rice","gimbap","onigiri")),
+    "cake" : set(("bread","cotton_candy","fried_rice","gimbap","onigiri")),
+    "cotton_candy": set(("bread","cake","fried_rice","gimbap","onigiri")),
+    "fried_rice": set(("bread","cake","cotton_candy","gimbap","onigiri")),
+    "gimbap": set(("bread","cake","cotton_candy","fried_rice","onigiri")),
+    "onigiri": set(("bread","cake","cotton_candy","fried_rice","gimbap"))
+}
+
+default crossed = set()
+
+screen foodoptions:
+
+    add "gui/textbox.png":
+        xalign 0.5
+        yalign 1.0
+    text "{color=#fd6692}(Drag a food option to the top left pink area to cross it out.){/color} Cori needs to cross out fast food, meals that would take too long to eat, and thick and heavy stuff.":
+        properties gui.text_properties("dialogue")
+        xpos gui.dialogue_xpos
+        xsize gui.dialogue_width
+        yalign 0.9
+
+    draggroup:
+        $ foodindex = 0
+        for i in all_foods:
+            drag:
+                drag_name i 
+                if foodindex > 2:
+                    pos (990+310*(foodindex%3), 180)
+                else:
+                    pos (990+310*(foodindex%3),500)
+                if(i == "bread"):
+                    xysize(241,217)
+                elif(i == "cake"):
+                    xysize(227,168)
+                elif(i =="cotton_candy"):
+                    xysize(184,276)
+                elif(i=="fried_rice"): # i is the fried rice. helo
+                    xysize(206,252)
+                elif(i=="gimbap"):
+                    xysize(284,176)
+                elif(i=="onigiri"):
+                    xysize(229,248)
+                droppable False 
+                dragged foo_d
+                
+                frame:
+                    background food_pics[i]
+                    foreground Text("")
+
+            $ foodindex+=1
+        
+        drag:
+            drag_name "nopecorner"
+            draggable False 
+            pos (0,0)
+            xysize(405,561)
+            frame:
+                background "images/nopecorner.png"
+                foreground Text("")
+
+
+init python:
+    def foo_d(drags,drop):
+        # drags is a list
+        if drop:
+            store.crossed.add(drags[0].drag_name)
+            # lst_foods.remove((drags[0].drag_name,"cross_"+drags[0].drag_name))
+        else:
+            store.crossed.discard(drags[0].drag_name)
+            # lst_foods.append((drags[0].drag_name,"cross_"+drags[0].drag_name))
+
+        for food_name, food_mix in store.mixes.items():
+            if food_mix == store.crossed:
+                return food_name 
+
+screen foodscreen(helpmeplease):
+    add "images/" + helpmeplease +".png":
+        xalign 0.75
+        yalign 0.4
+        zoom 2.5
+        
+screen takeflyers:
+    imagebutton:
+        idle "images/flyerjob.png"
+        hover "images/flyerjobh.png"
+        action Function(renpy.jump,"jobflyer")
+        focus_mask True
+
+    imagebutton:
+        idle "images/flyerstudy.png"
+        hover "images/flyerstudyh.png"
+        action Function(renpy.jump,"studyflyer")
+        focus_mask True
+
+    imagebutton:
+        idle "images/flyerdesign.png"
+        hover "images/flyerdesignh.png"
+        action Function(renpy.jump,"designflyer")
+        focus_mask True
+
+    imagebutton:
+        idle "images/flyerai.png"
+        hover "images/flyeraih.png"
+        action Function(renpy.jump,"aiflyer")
+        focus_mask True
+
+    imagebutton:
+        idle "images/flyernone.png"
+        hover "images/flyernonh.png"
+        action Function(renpy.jump,"noneflyer")
+        focus_mask True
+    # imagebutton:
+    #     idle "gui/button/loadbutton.png"
+    #     hover "gui/button/loadbuttonh.png"
+    #     action ShowMenu("load")
+    #     at loadbut(0.2)
+    #     alt "Load"
+    #     focus_mask True 
+screen flyjob:
+    add "images/flyerjob.png"
+screen flystudy:
+    add "images/flyerstudy.png"
+screen flydesign:
+    add "images/flyerdesign.png"
+
+screen flyai:
+    add "images/flyerai.png"
+
+screen endscreen():
+    add "images/bg green.png"
+
+    # maybe I separate these 
+
 ################################################################################
 ## Styles
 ################################################################################

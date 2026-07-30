@@ -80,7 +80,7 @@ define config.exit_transition = dissolvefast
 
 ## Between screens of the game menu.
 
-define config.intra_transition = dissolve
+define config.intra_transition = None
 
 
 ## A transition that is used after a game has been loaded.
@@ -112,8 +112,8 @@ define config.window = "auto"
 
 ## Transitions used to show and hide the dialogue window
 
-define config.window_show_transition = Dissolve(.2)
-define config.window_hide_transition = Dissolve(.2)
+define config.window_show_transition = None
+define config.window_hide_transition = Dissolve(.1)
 
 
 ## Preference defaults #########################################################
