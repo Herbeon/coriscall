@@ -25,6 +25,7 @@ define lst_foods = []
 define finalfood = ""
 
 # badges or something:
+# NO TIME FOR TODAY'S RELEASE!!
 
 define endstar = ""
 define foodstar = ""
@@ -54,6 +55,7 @@ define galleryspeed = ""
 # one star for getting something the hungry liked
 # speed done (counted by lines of dialogue clicked through??) (also counts restarted stuff)
 # decisiveness (choosing to think more about tihngs, or answering "maybe")
+define decisiveness = "2"
 # independence: amount of guidance they asked for/used (mostly in the getting-painting chapter)
 
 define speeddone = "fast"
@@ -111,12 +113,16 @@ label start:
 
     stop music fadeout 1.0
 
-    jump failure_ending
+    scene ringy1
+
     q "ring"
 
+    scene ringy2
     q "ring ring ring"
 
+    scene ringy3
     c "Whaat"
+    scene cally1
     jump the_call
 
     return
@@ -132,41 +138,61 @@ menu the_call:
         $ hungup += 1
         jump the_call2
 label the_call2:
+    scene cally2
     c "Back to sleep."
+    scene sleepy1
+    pause 0.5
     $ s = hungup * "I"
+    scene cally3
+
     q "R[s]NG!"
+    scene cally1
     jump the_call 
 
 
 label the_customer:
     $ global hungup
-    scene bg lightground
+    scene hey1
     q "HEY."
+    scene hey2
     if hungup > 0:
         if hungup == 1:
             q "WHY'D YOU HANG UP ON ME ONCE??"
         else:
             q "WHY'D YOU HANG UP ON ME [hungup] TIMES??"
             c "(Wait, I did?)"
+    scene hey3 
     q "..."
     q "right. I was told you wouldn't talk much."
+    scene hey4 
+    with dissolve
     q "hi, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
+    scene hey5
+    with dissolve 
     q "you do food delivery even at 4:33 am."
+    scene hey6
+    with dissolve 
     q "please accept my order."
+    scene hey7
     q "I'm really..."
+    scene hey8
+    with dissolve 
     h "{color=#fd6692}...hungry.{/color}"
 
-    jump the_order
-
-label the_order:
-    show cori sorry with dissolve 
-    "you get the feeling that you don't quite have a choice."
-    "(after all, cori has always been a bit too compassionate for the unyielding world.)"
     scene bg dark
     with dissolve 
-    # scene where cori gets up and dressed
-    # fade to black
     jump from_the_beginning
+
+# label the_order:
+
+#     show cori sorry with dissolve 
+#     "you get the feeling that you don't quite have a choice."
+#     "(after all, cori has always been a bit too compassionate for the unyielding world.)"
+#     scene bg dark
+#     with dissolve 
+#     # scene where cori gets up and dressed
+#     # fade to black
+#     jump from_the_beginning
 
 
 label from_the_beginning:
@@ -174,13 +200,20 @@ label from_the_beginning:
     # a collection of scenes. maybe animate or parallax or something
     scene bg lightcyan
     "one early sunrise, a little bunny woke up hungry."
+    show hungri1
     "unfortunately, 4:20 am in the big '26 was probably too early for anything delicious."
+    show hungri2
     "the little bunny sighed, ready to scour for scraps."
+    show hungri3 
     "eyes still half-closed, they glanced towards the distance."
+    show hungri4
     "a familiar monument stood along the skyline."
+    show hungri5
     "suddenly excited, the bunny rushed to find a method of contact."
+    show hungri6
     "an unripe banana would do."
     # hungri faces
+    scene bg lightground
     show hungry scheming 
     h "{outlinecolor=#fd6692}{color=#c3f55b}Cori's Courier{/color}{/outlinecolor} is going to love this customer."
     scene bg phonecall with dissolve
@@ -327,6 +360,7 @@ label trying_to_understand:
     show hungry angry with smallsquish 
     h "get going!"
     # scene transition
+    scene bg 
     show cori confused with corisquish 
     c "I just ran off in a miscellaneous direction. I'm not quite sure what \"food\" they are craving."
     # scene flashback
@@ -1322,7 +1356,7 @@ label failure_ending:
     show cori neutral 
     show hungry neutral with smallsquish 
     h "goodbye, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
-    show hungry smiling with dissolve
+    show hungry scheming with dissolve
     h "I know we'll meet again."
 
     scene bg verydark

@@ -16,19 +16,23 @@ I wanted to try to do some more technical things in this vn, and get deeper into
 * animated and customized main menu with a parallax (very proud)
 * drag & drop interactions!
 * click-to-do interactions!
-* interactive ending screen (trust)
 
 # stuff I'd like to add
-* finish the two endings that I haven't written yet
-* finish story first!
-* then, cooler gui!
+* interactive ending screens!
+* finish the two endings that I haven't written yet lol
+* maybe gui update
 * then, maybe minigames
+* oh and maybe sound effects or stuff hmm
 
 # things I learned
 * I got much more comfortable with using screens, and they are super duper versatile :D
 * Since this visual novel was originally going to be short, I had no written plan and no flowchart :fear: learned not to do that again (I had to keep the ending conditions simple due to my lack of planning, but at least there are a lot of endings!)
 * Also did lots more formatting the gui. I think the colour palette really helps bring the game's gui together!
 * Next time I make a visual novel, I'll try to make some minigames with screens, and won't hesitate to change up the gui and screens lots! (Now that I do understand the stuff that is going on. yay!)
+
+# credits
+I got my friend [emilyliao](https://www.youtube.com/@Emily-Liao) to make the main menu music :D
+Special paintings in-game were by my friends [incurableregrets](https://www.deviantart.com/incurable-regrets) and [interestingicepelt](https://artfight.net/~interestingicepelt) :>
 
 # full explanation of the story
 Uh I will write one later. Feel free to dm me (herby) on slack with questions.

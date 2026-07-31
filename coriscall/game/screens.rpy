@@ -227,7 +227,11 @@ screen flyai2:
         xpos -400
 
 screen endscreen():
-    add "images/bg green.png"
+    add "images/bg lightcyan.png"
+    add TrackCursor("gui/particles.png",20)
+    add TrackCursor("gui/particles2.png", 10):
+        pos(200,0)
+
 
     # maybe I separate these 
 
