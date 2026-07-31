@@ -20,6 +20,7 @@ define restarted = 0
 
 define held_flyer = ""
 define held_food = ""
+define held_painting = ""
 
 define lst_foods = []
 define finalfood = ""
@@ -113,7 +114,6 @@ label start:
     stop music fadeout 1.0
 
     show ringy1
-
     q "ring"
 
     show ringy2
@@ -163,6 +163,8 @@ label the_customer:
             c "(Wait, I did?)"
     show hey3 
     q "..."
+
+    jump failure_ending
     q "right. I was told you wouldn't talk much."
     show hey4 
     with dissolve
@@ -407,7 +409,8 @@ label understanding_alone:
     show cori neutral:
         zoom 1.0
     # TIE UP
-    $ renpy.notify("part 3: the delivery")
+    c "I guess I'll just go to the nearest art gallery."
+    jump fast_gallery_entrance
 
 
 
@@ -712,10 +715,14 @@ label flyer_job:
     show cori talking
     c "Um. You're welcome."
 
-    show screen endscreen
-    pause 
-    return 
+    window hide 
+    play music theme2 fadein 1.0 loop fadeout 2.0
+    show screen endscreen 
+    with dissolve 
 
+    pause 
+
+    return 
 
 label flyer_study:
     $ renpy.notify("part 4: the review")
@@ -773,12 +780,14 @@ label flyer_study:
     show cori confused 
     c "Um. Anytime? "
 
-    window hide
-    show screen endscreen
+    window hide 
+    play music theme2 fadein 1.0 loop fadeout 2.0
+    show screen endscreen 
+    with dissolve 
+
     pause 
+
     return 
-
-
 
 label flyer_design:
     $ renpy.notify("part 4: the review")
@@ -818,7 +827,12 @@ label flyer_design:
     show hungry thumbsup with smallsquish 
     h "yea."
 
-    # scene bg ending yay
+    window hide 
+    play music theme2 fadein 1.0 loop fadeout 2.0
+    show screen endscreen 
+    with dissolve 
+
+    pause 
 
     return 
 
@@ -1003,19 +1017,39 @@ menu ask_for_guidance:
         "or maybe it is just laughing at your stupidity."
         h "get going then!"
         jump slow_gallery_entrance
-    # TIE UP
 
 label fast_gallery_entrance:
-    c "fnish this"
+    $ renpy.notify("part 3: the delivery")
+    scene bg gallery 
+    show cori smiling
+    c "It's quite early. I don't think anyone will be in here for a while."
+
 label mid_gallery_entrance:
-    c "finish this"
+    $ renpy.notify("part 3: the delivery")
+
+    scene bg gallery 
+    show cori neutral
+    c "I don't know how much time I have until someone comes here."
     $ global speeddone
     $ speeddone = "mid"
-label slow_gallery_entrance:
-    c "finish this"
-    $ speeddone = "slow"
-    # oo do paintings falling down or something
 
+
+label slow_gallery_entrance:
+    $ renpy.notify("part 3: the delivery")
+
+    scene bg gallery 
+    show cori frowning
+    c "I took too long getting here. Others could be here at any moment."
+    show gallery doorshadow with dissolve
+
+    c "I think that all I can do is take the first painting I see-"
+    $ speeddone = "slow"
+    show cori sorry with corisquish
+    c "Oh no, somebody is already inside!"
+    hide cori
+    c "I need to run (away)!"
+    jump got_no_painting
+    # oo do paintings falling down or something
 
 
 label understanding_the_order:
@@ -1156,7 +1190,7 @@ label got_best_painting_ending:
     else:
         h "I'm super impressed you fetched this painting without my guidance!"
     
-    "(You are mostly in shock as you watch the hungry bunny physically consume the art.)"
+    "(You are mostly shocked.)"
     
     show hungry scheming with smallsquish
     h "heh heh. that was pretty good."
@@ -1170,9 +1204,15 @@ label got_best_painting_ending:
 
     # it was quick: shows that this player cori is more about action than dialogue/thinking, so the ending is swift as well?
 
-    # make ending screens interactive
+    # make ending screens interactive.....eventually
     $ fullywon = True 
+    window hide 
+    play music theme2 fadein 1.0 loop fadeout 2.0
+    show screen endscreen 
+    with dissolve 
+
     pause 
+
     return 
 
 label successful_ending:
@@ -1198,13 +1238,13 @@ label successful_ending:
 
     h "chomp chomp chomp"
 
-    show cori neutral
-    c "Oh no."
-    show cori frowning
-    c "How will I explain this to the art gallery?"
-    show cori neutral 
-    show hungry scheming with smallsquish
-    h "don't worry. I think it will be a loong while before they notice."
+    # show cori neutral
+    # c "Oh no."
+    # show cori frowning
+    # c "How will I explain this to the art gallery?"
+    # show cori neutral 
+    # show hungry scheming with smallsquish
+    # h "don't worry. I think it will be a loong while before they notice."
     
     # eating 
     show hungry neutral 
@@ -1212,11 +1252,11 @@ label successful_ending:
 
     show hungry sad with smallsquish
     h "I've had this painting before."
-    show cori confused 
-    c "I thought you had said that you haven't?"
-    show cori neutral
-    show hungry unamused with smallsquish
-    h "I recognized the taste. your description sucked."
+    # show cori confused 
+    # c "I thought you had said that you haven't?"
+    # show cori neutral
+    # show hungry unamused with smallsquish
+    # h "I recognized the taste. your description sucked."
     show cori sorry with corisquish
     c "But that was a niche gallery!"
     show cori neutral 
@@ -1256,10 +1296,14 @@ label successful_ending:
     scene bg dark
     with dissolve
 
-    show screen endscreen
+    window hide 
+    play music theme2 fadein 1.0 loop fadeout 2.0
+    show screen endscreen 
+    with dissolve 
 
-    pause
+    pause 
 
+    return 
     return 
 
     # next up: cori's creation?? cori's coeur??
@@ -1300,11 +1344,9 @@ label half_ending:
     h "that was obviously a joke! I am VERY PICKY!"
     show cori frowning:
         zoom 1.2
-    c "I can tell! But I'd appreciate some explanations!"
+    c "Could you explain your preferences without being so vague?"
     show hungry neutral with smallsquish:
         zoom 1 
-    # make the sprites move towards each other during this interaction lol
-
     show cori neutral:
         zoom 1
 
@@ -1376,6 +1418,17 @@ label long_explanation:
     scene bg verydark
     with dissolve 
     jump try_again 
+
+label got_no_painting:
+    # came back from the galery with no painting
+    scene bg lightground
+    show cori neutral 
+    show hungry hungry 
+    c "Hi, Hungri."
+    show hungry neutral 
+    show cori talking 
+    c "Sorry, but I didn't get to the gallery early enough. People were already present there."
+    jump failure_ending
 
 
 label failure_ending:

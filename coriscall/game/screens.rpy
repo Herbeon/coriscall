@@ -228,6 +228,10 @@ screen flyai2:
 
 screen endscreen():
     add "images/bg lightcyan.png"
+
+    # check for held flyer and held food
+
+
     add TrackCursor("gui/particles.png",20)
     add TrackCursor("gui/particles2.png", 10):
         pos(200,0)
