@@ -235,6 +235,13 @@ screen endscreen():
 
     # maybe I separate these 
 
+transform scrolly():
+    pause 0.2
+    linear 2.0 yoffset -100
+
+screen monumental():
+    add "images/hungri4.png":
+        at scrolly()
 ################################################################################
 ## Styles
 ################################################################################

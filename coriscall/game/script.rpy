@@ -110,19 +110,19 @@ label start:
     scene bg dark
     with dissolve
     $ renpy.notify("part 1: the call")
-
     stop music fadeout 1.0
 
-    scene ringy1
+    show ringy1
 
     q "ring"
 
-    scene ringy2
+    show ringy2
     q "ring ring ring"
 
-    scene ringy3
+    show ringy3
     c "Whaat"
     scene cally1
+    with dissolve
     jump the_call
 
     return
@@ -138,12 +138,12 @@ menu the_call:
         $ hungup += 1
         jump the_call2
 label the_call2:
-    scene cally2
+    show cally2
     c "Back to sleep."
-    scene sleepy1
+    show sleepy1
     pause 0.5
     $ s = hungup * "I"
-    scene cally3
+    show cally3
 
     q "R[s]NG!"
     scene cally1
@@ -152,28 +152,28 @@ label the_call2:
 
 label the_customer:
     $ global hungup
-    scene hey1
+    show hey1
     q "HEY."
-    scene hey2
+    show hey2
     if hungup > 0:
         if hungup == 1:
             q "WHY'D YOU HANG UP ON ME ONCE??"
         else:
             q "WHY'D YOU HANG UP ON ME [hungup] TIMES??"
             c "(Wait, I did?)"
-    scene hey3 
+    show hey3 
     q "..."
     q "right. I was told you wouldn't talk much."
-    scene hey4 
+    show hey4 
     with dissolve
     q "hi, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
-    scene hey5
+    show hey5
     with dissolve 
     q "you do food delivery even at 4:33 am."
-    scene hey6
-    with dissolve 
+    show hey6
     q "please accept my order."
-    scene hey7
+    show hey7
+    with dissolve
     q "I'm really..."
     scene hey8
     with dissolve 
@@ -198,7 +198,7 @@ label the_customer:
 label from_the_beginning:
     # writing this alongside cori's perspective.
     # a collection of scenes. maybe animate or parallax or something
-    scene bg lightcyan
+    scene bg pink
     "one early sunrise, a little bunny woke up hungry."
     show hungri1
     "unfortunately, 4:20 am in the big '26 was probably too early for anything delicious."
@@ -206,9 +206,10 @@ label from_the_beginning:
     "the little bunny sighed, ready to scour for scraps."
     show hungri3 
     "eyes still half-closed, they glanced towards the distance."
-    show hungri4
+    show screen monumental
     "a familiar monument stood along the skyline."
     show hungri5
+    hide screen monumental
     "suddenly excited, the bunny rushed to find a method of contact."
     show hungri6
     "an unripe banana would do."
@@ -234,6 +235,7 @@ label from_the_beginning:
 
 label from_the_ringing:
     show hungry neutral with dissolve 
+    show cori neutral with dissolve 
     "after what felt like multiple eternities, cori finally picked up."
     h "HEY."
     if hungup > 0:
@@ -275,8 +277,7 @@ label bro_gets_hung_up_on:
 label offer_guidance:
     $ renpy.notify("part 2: the order")
     # cori is now dressed and ready to do delivery. walks along the street
-    scene bg phonecall with dissolve
-    show cori neutral with corisquish 
+    show cori frowning with corisquish 
     c "Hi, Hungry."
     # cori: talking, neutral, confused, shocked, smile, sorry, thinking. cori is less expressive than the hungry
     show hungry smiling with smallsquish 
@@ -316,7 +317,9 @@ label offer_guidance:
     c "..."
     show cori talking with corisquish 
     c "Bye, Hungry."
-    "you hang up on the call. Surely that was a prank."
+    scene bg lightground with dissolve
+    "surely that was a prank."
+    "but just as you turn around to get some more sleep..."
     # cori turns a corner
     show hungry scheming with smallsquish
     h "hi, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
@@ -336,7 +339,10 @@ label offer_guidance:
     "you hesitate,"
     show cori determined
     "and you give in."
+    show cori talking
+    show hungry smiling
     c "Okay. I will."
+    show cori neutral 
     show hungry thumbsup with smallsquish
     jump want_guidance
     # cori's memory is pretty decent
@@ -353,6 +359,7 @@ menu want_guidance:
 
 label trying_to_understand:
     show hungry neutral with smallsquish
+    h "okay then."
     h "I am too HUNGRY. so I will sit here and await your delivery."
     h "..."
     show hungry unamused with smallsquish
@@ -360,7 +367,7 @@ label trying_to_understand:
     show hungry angry with smallsquish 
     h "get going!"
     # scene transition
-    scene bg 
+    scene bg lightcyan
     show cori confused with corisquish 
     c "I just ran off in a miscellaneous direction. I'm not quite sure what \"food\" they are craving."
     # scene flashback
@@ -888,12 +895,12 @@ label got_nothing_from_galleria:
 
 
 label shops_galleria:
-
+    scene bg white 
     show cori neutral 
     c "Well, this is the closest galleria."
     show cori frowning  
     c "Except...nothing is open, and nobody has set up stalls yet."
-    show cori neutral 
+    show cori neutral
     c "It's too early in the morning."
     c "..."
     show cori frowning 
@@ -912,16 +919,24 @@ menu shops_what_do:
         c "I guess I still have time if I go to the nearest store named Galleria."
         show cori determined with corisquish 
         c "I just need to be speedy!"
+        $ global speeddone
+        $ speeddone = mid 
         scene bg dark 
         with dissolve 
         jump named_galleria
 
 label exploring_shops:
-    c ""
+    show exploreri with corisquish
+    c "There is actually nothing here."
     # uh idk what to put here. I guess cori could spot some flyers or something??
     # ooh sohuld do image screens yes
+    # lol 4th wall
+    c "I guess it's still undergoing {color=#fd6692}development.{/color}"
+    c "Now I'll have to return to Hungri without anything."
+    jump failure_ending
 
 label early_back_from_shops:
+    scene bg lightground
     show cori neutral 
     c "Hi, hungry bunny."
     show hungry hungry with smallsquish
@@ -976,7 +991,7 @@ menu ask_for_guidance:
         h "..."
         show hungry scheming with smallsquish
         h "anytime, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
-        jump slow_gallery_entrance
+        jump mid_gallery_entrance
     "ask \"anything else you want in your meal?\"":
         show hungry hungry with smallsquish
         h "I thought you'd never ask!"
@@ -990,8 +1005,15 @@ menu ask_for_guidance:
         jump slow_gallery_entrance
     # TIE UP
 
+label fast_gallery_entrance:
+    c "fnish this"
+label mid_gallery_entrance:
+    c "finish this"
+    $ global speeddone
+    $ speeddone = "mid"
 label slow_gallery_entrance:
     c "finish this"
+    $ speeddone = "slow"
     # oo do paintings falling down or something
 
 
@@ -1069,6 +1091,8 @@ label yes_invade_gallery:
     show cori determined with corisquish 
     c "I'll deliver."
     # just had a lot of dialogue, so this wlil be slow ? or medium?
+    # nvm I have decided that canonically hungri yaps fast
+    jump fast_gallery_entrance
 
 label no_invading_gallery:
     show cori determined 
@@ -1086,9 +1110,20 @@ menu think_more_or_go:
     c "I understand..."
     "I'll go to the nearest gallery now.":
         # tie up
-        jump slow_gallery_entrance
+        jump mid_gallery_entrance
     "Just let me think about it a bit more.":
         # tie up. not too much thinking but a bit of thinking is what will do
+        scene bg lightground
+        show cori thinking with corisquish
+        c "..."
+        show cori confused with corisquish
+        c "..."
+        show hungry unamused with smallsquish
+        show cori sorry 
+        h "OKAY, that is TOO MUCH THINKING!"
+        show hungry angry with smallsquish
+        show cori frowning
+        h "just go already!"
         jump slow_gallery_entrance
 
 # ok so there will be 3 types of gallery entrance: quick, normal, slow
