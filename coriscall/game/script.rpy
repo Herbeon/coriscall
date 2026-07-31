@@ -60,6 +60,8 @@ define speeddone = "fast"
 # more clicking through = becomes slow
 
 define fullywon = False
+define endingtype = ""
+# the failure, the 
 define endingdesc = ""
 
 # the call, the order, the delivery, the review 
@@ -97,6 +99,8 @@ transform corisquish(duration = 0.1,*,new_widget=None,old_widget=None):
     events True
     linear 0.2 yzoom(1.0)
 
+define audio.theme = "audio/most peculiar delivery.wav"
+define audio.theme2 = "audio/more peculiar delivery.wav"
 
 # The game starts here.
 
@@ -105,7 +109,9 @@ label start:
     with dissolve
     $ renpy.notify("part 1: the call")
 
-    jump nothing_is_satisfactory
+    stop music fadeout 1.0
+
+    jump failure_ending
     q "ring"
 
     q "ring ring ring"
@@ -1305,17 +1311,23 @@ label long_explanation:
 
 label failure_ending:
     $ renpy.notify("part 4: the review")
+    scene bg bigshock 
+    show cori sorry 
     show hungry angry with smallsquish
     h "seriously? you couldn't get ANYTHING?"
     show hungry unamused with smallsquish
+    show cori frowning 
     h "I guess I will starve today."
+    scene bg lightground
+    show cori neutral 
     show hungry neutral with smallsquish 
     h "goodbye, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
     show hungry smiling with dissolve
     h "I know we'll meet again."
 
+    scene bg verydark
+    with dissolve 
     # try again cutscene
-    scene bg green 
     jump try_again
 
 menu try_again:
@@ -1328,7 +1340,7 @@ menu try_again:
         h "I will remember EVERY time she's hung up on me."
         show hungry scheming with smallsquish
         h "among other things. see you there!"
-        scene bg dark 
+        scene bg verydark
         with dissolve
         jump start
     "Maybe":
@@ -1345,10 +1357,12 @@ label actually_over:
     h "how unfortunate that {outlinecolor=#fd6692}{color=#c3f55b}my courier{/color}{/outlinecolor} couldn't win!"
 
     window hide 
+    play music theme2 fadein 1.0 loop fadeout 2.0
     show screen endscreen 
     with dissolve 
 
     pause 
+
     return 
     # scenes
 

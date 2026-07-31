@@ -605,7 +605,7 @@ transform grassin():
 transform spinbit:
     subpixel True 
 
-    linear 0.75 xoffset 0 yoffset -2
+    linear 1.0 xoffset 0 yoffset -2
     linear 1.0 xoffset 0 yoffset 0
 
     repeat 
@@ -623,17 +623,15 @@ transform rotbit:
 
     anchor (1.0,1.0)
     linear 2.0 rotate 3
-    linear 1.5 rotate 0
+    linear 2.0 rotate 0
     repeat 
 
 transform rotbit2:
     subpixel True
 
     anchor (0.5,0.5)
-    linear 1.0 rotate 3
-    linear 0.5 rotate 4
-    linear 1.0 rotate 1
-    linear 0.5 rotate 0
+    linear 1.0 rotate 4
+    linear 1.0 rotate 0
     repeat 
 
 transform rotbit3:
@@ -651,7 +649,7 @@ transform downbit:
     yoffset 0
 
     linear 1.0 yoffset -5
-    linear 0.75 yoffset 0
+    linear 1.0 yoffset 0
     repeat 
 
 transform bdbit:
@@ -660,7 +658,7 @@ transform bdbit:
     xoffset 0
     yoffset 0
 
-    linear 1.5 yoffset 3
+    linear 2 yoffset 3
     linear 1.0 yoffset 0
     repeat 
 
@@ -669,8 +667,8 @@ transform brotbit:
 
     xanchor 1.0
     yanchor 1.0
-    linear 0.75 rotate -4
-    linear 1 rotate -1
+    linear 1 rotate -5
+    linear 1 rotate 1
     repeat 
 
 transform intimerot:
