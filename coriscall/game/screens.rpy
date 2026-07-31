@@ -228,7 +228,9 @@ screen flyai2:
 
 screen endscreen():
     add "images/bg lightcyan.png"
-
+    if itsbrover:
+        # it's over 
+        
     # check for held flyer and held food
 
 
@@ -744,7 +746,7 @@ screen main_menu():
 
     add gui.main_menu_background
 
-    if fullywon:
+    if persistent.fullywon:
         # HUNGRI'S ANIMATION CHANGES (IS IN TIME)
         add "gui/mmshadow.png":
             at sidebit()

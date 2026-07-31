@@ -18,6 +18,8 @@ define donesofar = 0
 define guided = False
 define restarted = 0
 
+define itsbrover = False
+
 define held_flyer = ""
 define held_food = ""
 define held_painting = ""
@@ -62,7 +64,7 @@ define decisiveness = "2"
 define speeddone = "fast"
 # more clicking through = becomes slow
 
-define fullywon = False
+define persistent.fullywon = None
 define endingtype = ""
 # the failure, the 
 define endingdesc = ""
@@ -113,6 +115,7 @@ label start:
     $ renpy.notify("part 1: the call")
     stop music fadeout 1.0
 
+    jump fast_gallery_entrance
     show ringy1
     q "ring"
 
@@ -716,7 +719,7 @@ label flyer_job:
     c "Um. You're welcome."
 
     window hide 
-    play music theme2 fadein 1.0 loop fadeout 2.0
+    play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
 
@@ -781,7 +784,7 @@ label flyer_study:
     c "Um. Anytime? "
 
     window hide 
-    play music theme2 fadein 1.0 loop fadeout 2.0
+    play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
 
@@ -828,7 +831,7 @@ label flyer_design:
     h "yea."
 
     window hide 
-    play music theme2 fadein 1.0 loop fadeout 2.0
+    play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
 
@@ -1021,8 +1024,35 @@ menu ask_for_guidance:
 label fast_gallery_entrance:
     $ renpy.notify("part 3: the delivery")
     scene bg gallery 
-    show cori smiling
+    show cori smile
     c "It's quite early. I don't think anyone will be in here for a while."
+    # oh gosh I could make this another drag and drop
+    # well no time
+    scene bg verydark 
+    with dissolve 
+    c "This is the back of the gallery. The stuff that they store here is probably interesting."
+    if guided:
+        show pmeta:
+            zoom 0.4
+            xalign 0.5
+            yalign 0.0
+        c "I found a painting from their storage area that looks enticing. There is no label, just a signature I don't recognize in the corner."
+        c "It almost feels familiar."
+        h "okay, TAKE IT! and HURRY UP back here! I'm hungry."
+        c "Yeah, hungry, I know."
+        $ global held_painting
+        $ held_painting = "meta"
+    else:
+        show pheaven:
+            zoom 0.4
+            xalign 0.5
+            yalign 0
+        c "This painting feels... familiar."
+        c "I think the hungry bunny would like it. I know that I certainly do."
+        $ global held_painting
+        $ held_painting = "heaven"
+    jump got_best_painting_ending
+        
 
 label mid_gallery_entrance:
     $ renpy.notify("part 3: the delivery")
@@ -1032,6 +1062,30 @@ label mid_gallery_entrance:
     c "I don't know how much time I have until someone comes here."
     $ global speeddone
     $ speeddone = "mid"
+    c "I guess I'll take the first painting I see."
+    scene bg white 
+    with dissolve 
+    if guided:
+        h "NO REPEATS!"
+        c "I'm at a small gallery. I would guess that you haven't seen these before."
+        show lhat:
+            zoom 0.4
+            xalign 0.5
+            yalign 0.4
+            
+        c "That's a whimsical painting. I think Hungri would like it."
+        $ global held_painting
+        $ held_painting = "hat"
+    else:
+        show lmoonshy:
+            zoom 0.5
+            xalign 0.75
+            yalign 0.3
+        show cori smile 
+        c "This painting is the embodiment of \"light and fluffy.\" I think the hungry would like it."
+        $ global held_painting
+        $ held_painting = "moonshy"
+    jump successful_ending
 
 
 label slow_gallery_entrance:
@@ -1169,13 +1223,33 @@ menu think_more_or_go:
 
 label got_best_painting_ending:
     $ renpy.notify("part 4: the review")
+    scene bg lightground
+    show cori smile
+    if held_painting == "heaven":
+        show pheaven:
+            zoom 0.4
+            xalign 0.3
+            yalign 0.0
+            rotate 6
+    if held_painting == "meta":
+        show pmeta:
+            zoom 0.3
+            xalign 0.35
+            yalign 0.4  
+            rotate 7
+    c "Hi, I hope I was quick enough."
+
+
     show hungry shocked with smallsquish
     h "YOU GOT IT!!"
     show hungry smiling with smallsquish
     h "thank you very much."
     show hungry hungry with smallsquish
+    hide pmeta
+    hide pheaven
     h "I will eat this RIGHT NOW!!"
     # eating sprite 
+    show cori neutral 
     show hungry chomp with smallsquish 
     h "chomp chomp chomp"
     show hungry shocked with smallsquish
@@ -1190,6 +1264,7 @@ label got_best_painting_ending:
     else:
         h "I'm super impressed you fetched this painting without my guidance!"
     
+    show cori frowning
     "(You are mostly shocked.)"
     
     show hungry scheming with smallsquish
@@ -1197,7 +1272,7 @@ label got_best_painting_ending:
 
     show hungry yapping with smallsquish
     h "thank you for contributing to my stomach's collection!"
-    show cori neutral 
+    show cori talking
     c "Oh."
     show cori smile with corisquish 
     c "Anytime."
@@ -1205,9 +1280,10 @@ label got_best_painting_ending:
     # it was quick: shows that this player cori is more about action than dialogue/thinking, so the ending is swift as well?
 
     # make ending screens interactive.....eventually
-    $ fullywon = True 
+    $ global fullywon
+    $ persistent.fullywon = True 
     window hide 
-    play music theme2 fadein 1.0 loop fadeout 2.0
+    play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
 
@@ -1217,16 +1293,38 @@ label got_best_painting_ending:
 
 label successful_ending:
     $ renpy.notify("part 4: the review")
+    scene bg lightground 
     # i. e got painting
+    show cori smile
+    if(held_painting == "hat"):
+        show hat:
+            zoom 0.3
+            xalign 0.4
+            yalign 0.55
+            rotate 5
+            
+    else:
+        show moonshy:
+            zoom 0.4
+            xalign 0.4
+            yalign 0.5
+            rotate 10
+
+    c "Hi, I've returned."
+
     show hungry shocked with smallsquish
     h "YOU GOT IT!!"
     show hungry smiling with smallsquish
-    h "thank you very much."
-    h "I will eat this RIGHT NOW!!"
+    h "thank you very much. I will eat this RIGHT NOW!!"
+    if(held_painting == "hat"):
+        hide hat 
+    else:
+        hide moonshy 
     show hungry chomp with smallsquish 
     h "chomp chomp chomp"
     show cori shocked with corisquish 
     c "Wait, you're physically eating the art?!"
+    show cori frowning
     show hungry scheming with smallsquish
     h "yea. you thought it was metaphorical?"
     show hungry scheming:
@@ -1297,21 +1395,16 @@ label successful_ending:
     with dissolve
 
     window hide 
-    play music theme2 fadein 1.0 loop fadeout 2.0
+    play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
 
     pause 
 
     return 
-    return 
 
     # next up: cori's creation?? cori's coeur??
     # in every timeline, the Hungry finds a way to mess with cori.
-
-
-
-
 
 label half_ending:
     # got not-art lol
@@ -1478,8 +1571,10 @@ label actually_over:
 
     h "how unfortunate that {outlinecolor=#fd6692}{color=#c3f55b}my courier{/color}{/outlinecolor} couldn't win!"
 
+    $ global itsbrover
+    $ itsbrover = True 
     window hide 
-    play music theme2 fadein 1.0 loop fadeout 2.0
+    play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
 
