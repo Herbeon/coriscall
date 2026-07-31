@@ -199,13 +199,32 @@ screen takeflyers:
     #     focus_mask True 
 screen flyjob:
     add "images/flyerjob.png"
+
+screen flyjob2:
+    add "images/flyerjob.png":
+        xpos -400
+
 screen flystudy:
     add "images/flyerstudy.png"
+
+screen flystudy2:
+    add "images/flyerstudy.png":
+        xpos -550
+        ypos 300
+
 screen flydesign:
     add "images/flyerdesign.png"
 
+screen flydesign2:
+    add "images/flyerdesign.png":
+        xpos -800
+
 screen flyai:
     add "images/flyerai.png"
+
+screen flyai2:
+    add "images/flyerai.png":
+        xpos -400
 
 screen endscreen():
     add "images/bg green.png"
@@ -654,6 +673,56 @@ transform brotbit:
     linear 1 rotate -1
     repeat 
 
+transform intimerot:
+    subpixel True
+
+    anchor (1.0,1.0)
+    linear 1.0 rotate 2
+    linear 1.0 rotate -2
+    repeat 
+
+transform intimerot2:
+    subpixel True
+
+    anchor (0.5,0.5)
+    linear 1.0 rotate 2
+    linear 1.0 rotate -2
+    repeat 
+
+transform intimerot3:
+    subpixel True
+
+    anchor (0.5,0)
+    linear 1.0 rotate 2
+    linear 1.0 rotate -2
+    repeat 
+
+transform intimerotb:
+    subpixel True
+
+    xanchor 1.0
+    yanchor 1.0
+    linear 1 rotate -4
+    linear 1 rotate -2
+    repeat 
+
+transform intimedown:
+    subpixel True
+    
+    xoffset 0
+    yoffset 0
+
+    linear 1.0 yoffset 2
+    linear 1.0 yoffset 0
+    repeat   
+
+transform intimeup:
+    subpixel True
+
+    linear 1.0 xoffset -2
+    linear 1.0 xoffset 2
+
+    repeat
 
 screen main_menu():
 
@@ -661,32 +730,62 @@ screen main_menu():
     tag menu
 
     add gui.main_menu_background
-    
-    add "gui/mmshadow.png":
-        at sidebit()
 
-    add "gui/mmbackpaw2.png":
-        pos(1400,1180)
-        at rotbit()
-    
-    add "gui/mmwings.png":
-        pos(960,540)
-        at rotbit2()
+    if fullywon:
+        # HUNGRI'S ANIMATION CHANGES (IS IN TIME)
+        add "gui/mmshadow.png":
+            at sidebit()
 
-    add "gui/mmbody.png":
-        at bdbit()
+        add "gui/mmbackpaw2.png":
+            pos(1400,1180)
+            at intimerot()
+        
+        add "gui/mmwings.png":
+            pos(960,540)
+            at intimerot2()
 
-    add "gui/mmhindear.png":
-        pos(855,40)
-        at rotbit3()
+        add "gui/mmbody.png":
+            at intimedown()
+
+        add "gui/mmhindear.png":
+            pos(855,40)
+            at intimerot3()
 
 
-    add "gui/mmbananaarm.png":
-        pos (2040,1170)
-        at brotbit()
+        add "gui/mmbananaarm.png":
+            pos (2040,1170)
+            at intimerotb()
 
-    add "gui/mmear.png":
-        at downbit()
+        add "gui/mmear.png":
+            at intimeup()
+
+    else:
+
+        add "gui/mmshadow.png":
+            at sidebit()
+
+        add "gui/mmbackpaw2.png":
+            pos(1400,1180)
+            at rotbit()
+        
+        add "gui/mmwings.png":
+            pos(960,540)
+            at rotbit2()
+
+        add "gui/mmbody.png":
+            at bdbit()
+
+        add "gui/mmhindear.png":
+            pos(855,40)
+            at rotbit3()
+
+
+        add "gui/mmbananaarm.png":
+            pos (2040,1170)
+            at brotbit()
+
+        add "gui/mmear.png":
+            at downbit()
 
     # add TrackCursor("gui/mmbody.png",80)
     add TrackCursor("gui/button/startbuttonshadow.png",40)

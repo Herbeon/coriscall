@@ -59,6 +59,7 @@ define galleryspeed = ""
 define speeddone = "fast"
 # more clicking through = becomes slow
 
+define fullywon = False
 define endingdesc = ""
 
 # the call, the order, the delivery, the review 
@@ -405,7 +406,6 @@ label named_galleria:
 
     jump cross_foods_out
 
-label whynoworky:
 
 
 label cross_foods_out:
@@ -508,6 +508,7 @@ label nothing_is_satisfactory:
     "{color=#fd6692}(Click a flyer to take it.){/color}"
     pause 
 
+    jump noneflyer
     # cori notices a few flyers on the way out.
     # SCENE HERE
     # jump take_a_flyer
@@ -604,40 +605,209 @@ label back_from_the_galleria:
     else:
         # got a flyr
         show cori talking 
-        c "Well... I didn't get any food, because none of them seemed to fit."
         show hungry sad 
+
+        c "Well... I didn't get any food, because none of them seemed to fit."
         show cori sorry 
         c "Sorry."
         show cori neutral 
         c "If it makes you feel better, I saw this fun flyer on my way out."
+        show hungry neutral
         if held_flyer == "ai":
             jump flyer_aislop
-        # TIE UP
         if held_flyer == "design":
             jump flyer_design
+        if held_flyer == "study":
+            jump flyer_study
+        if held_flyer == "job":
+            jump flyer_job
+
+label flyer_job:
+    $ renpy.notify("part 4: the review")
+    show cori smile 
+    show screen flyjob2
+    c "The simplicity of the ad stood out to me."
+    show hungry unamused 
+    show cori neutral 
+    h "are you telling me to get a job??"
+    show cori confused
+    hide screen flyjob2
+    c "Well, if you worked in a kitchen, you could work around food all the time."
+    h "..."
+    scene bg bigshock
+    show cori neutral 
+    show hungry angry 
+    h "you IDIOT! I eat {color=#fd6692}ART!{/color}"
+    show cori shocked with corisquish
+    c "..."
+    show cori neutral 
+    c "What?"
+    pause 1.0
+    show cori frowning with corisquish 
+    c "Oh. I completely misunderstood. Sorry."
+    show cori talking 
+    c "So you would not enjoy employment in a kitchen?"
+    show hungry neutral with smallsquish 
+    h "nope. I don't even like eating food."
+    show hungry angry 
+    h "BECAUSE-"
+    show cori determined with corisquish 
+    show hungry chomp 
+    c "Sorry for shoving the flyer into your mouth. I figured you'd be a graphic design recycling bin."
+    show cori frowning 
+    show hungry unamused 
+    c "Also, my ears are too sensitive to tolerate your yelling."
+    show hungry neutral 
+    h "this flyer is BLAND. what sort of chef are they trying to hire??"
+    show cori neutral 
+    show hungry smiling
+    h "at least it's food. thanks, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
+    show cori talking
+    c "Um. You're welcome."
+
+    show screen endscreen
+    pause 
+    return 
+
+
+label flyer_study:
+    $ renpy.notify("part 4: the review")
+
+    show cori smile 
+    show screen flystudy2
+    c "The meter isn't the most consistent, but the design is catchy."
+    show hungry unamused
+    show cori determined
+    h "your delivery skills are not the most consistent either, evidently."
+    show cori confused
+    hide screen flystudy2
+    c "Hey! I'm a great delivery guy!"
+    show hungry neutral 
+    show cori frowning 
+    h "yea yea, sure."
+    show hungry hungry with smallsquish
+    h "now, onto more important matters..."
+    scene bg bigshock
+    show hungry angry with smallsquish 
+    show cori sorry with smallsquish
+    h "YOU COULDN'T GET ANYTHING?!"
+    show cori frowning 
+    c "I said none of the food at Galleria seemed to fit!"
+    scene bg lightground
+    show cori frowning 
+    show hungry unamused
+    h "you IDIOT! I eat {color=#fd6692}ART!{/color}"
+    show cori shocked with corisquish
+    c "..."
+    show cori neutral 
+    c "You what?"
+    pause 1.0
+    show cori frowning with corisquish 
+    c "Oh. I completely misunderstood your order."
+    c "Sorry."
+    show hungry angry with smallsquish
+    h "learn to understand SUBTEXT, kid!"
+    show cori talking 
+    show hungry neutral with smallsquish
+    h "maybe you SHOULD go join that study group."
+    show cori neutral 
+    c "I...don't even know what to say in response."
+    show hungry scheming 
+    h "heh. you cannot outwit me."
+    h "yummy!"
+    show hungry chomp with smallsquish 
+    show cori frowning 
+    c "Why are you eating the flyer?"
+    show hungry smiling with smallsquish
+    h "ha ha. delicious story art. glad rod is smiling."
+    show cori talking 
+    c "What?"
+    h "yea. thank you for the food :3"
+    show cori confused 
+    c "Um. Anytime? "
+
+    window hide
+    show screen endscreen
+    pause 
+    return 
+
+
 
 label flyer_design:
+    $ renpy.notify("part 4: the review")
     show cori smile 
+    show screen flydesign2
     c "It says that they need a \"grafic deziner,\" but I think they need a spell checker as well."
+    show hungry shocked with smallsquish
+    h "woww! they still hire graphic designers these days!!"
+    show cori frowning 
+    c "That sounded sarcastic."
+    show hungry neutral with smallsquish
+    h "mehh, I would neverr."
+    show cori confused 
+    show hungry hungry with smallsquish
+    h "now, onto more important matters..."
+    scene bg bigshock
+    show hungry angry with smallsquish 
+    show cori sorry with smallsquish
+    h "YOU COULDN'T GET ANYTHING?!"
+    show cori frowning 
+    c "I said none of the food at Galleria seemed to fit!"
+    scene bg lightground
+    show hungry angry with smallsquish
+    h "you IDIOT! I eat {color=#fd6692}ART!{/color}"
+    show cori confused with corisquish
+    c "..."
+    c "You what?"
+    show cori neutral 
+    h "..."
+    show hungry neutral 
+    "..."
+    show cori determined with corisquish 
+    c "Is this flyer artistic enough for your taste?"
+    show hungry chomp with smallsquish 
+    h "hmmmm..."
+    hide screen flydesign2
+    show hungry thumbsup with smallsquish 
+    h "yea."
+
+    # scene bg ending yay
+
+    return 
+
 
 
 label flyer_aislop:
     # special ending heh
+    $ renpy.notify("part 4: the review")
+
     show cori neutral 
+    show screen flyai2
     c "It looks ai-generated, and also seems to be about nothing in particular."
     show cori talking 
     c "But that's what makes the flyer funny."
+    hide screen flyai2
     show cori neutral 
     show hungry neutral with smallsquish
     h "..."
-    show hungry disgusted with smallsquish
+    scene bg green 
+    show cori neutral 
+    show hungry disgusted
     h "I think I just lost my appetite."
+    scene bg lightground 
+    show hungry disgusted
     show cori frowning with corisquish 
     c "Wait, what?"
+    scene bg bigshock
     show cori neutral 
-    show hungry angry with smallsquish
+    show hungry angry with smallsquish:
+        zoom 1.05
     h "you IDIOT! I eat {color=#fd6692}ART!{/color}"
+    show cori confused with corisquish 
+    c "..."
+    scene bg lightground 
     show cori confused 
+    show hungry angry
     c "You what?"
     show cori neutral 
     show hungry unamused with smallsquish
@@ -656,15 +826,20 @@ label flyer_aislop:
     h "ha ha ha ha ha."
     # ending scene: you...win?
     # on the thing: cori is mostly in shock. the hungry looks like they just looked at something gross, and even the recycling bin also has a grossed out face.
+
     return 
 
 
 label got_nothing_from_galleria:
     show cori sorry 
     c "I'm sorry, but I couldn't find anything that you would like."
+    scene bg bigshock
     show cori neutral 
     show hungry angry with smallsquish
     h "not that you would KNOW, because you didn't bother to LISTEN to my guidance!"
+    scene bg lightground
+    show hungry frowning with smallsquish
+    show cori neutral
     h "did you at least bring any options?"
     show cori frowning 
     c "Um. No."
@@ -673,9 +848,10 @@ label got_nothing_from_galleria:
 
 
 label shops_galleria:
+
     show cori neutral 
     c "Well, this is the closest galleria."
-    show cori frowning 
+    show cori frowning  
     c "Except...nothing is open, and nobody has set up stalls yet."
     show cori neutral 
     c "It's too early in the morning."
@@ -920,11 +1096,13 @@ label got_best_painting_ending:
     # it was quick: shows that this player cori is more about action than dialogue/thinking, so the ending is swift as well?
 
     # make ending screens interactive
-
+    $ fullywon = True 
+    pause 
     return 
 
 label successful_ending:
     $ renpy.notify("part 4: the review")
+    # i. e got painting
     show hungry shocked with smallsquish
     h "YOU GOT IT!!"
     show hungry smiling with smallsquish
@@ -1126,6 +1304,7 @@ label long_explanation:
 
 
 label failure_ending:
+    $ renpy.notify("part 4: the review")
     show hungry angry with smallsquish
     h "seriously? you couldn't get ANYTHING?"
     show hungry unamused with smallsquish

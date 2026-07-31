@@ -80,7 +80,7 @@ define config.exit_transition = dissolvefast
 
 ## Between screens of the game menu.
 
-define config.intra_transition = None
+define config.intra_transition = dissolvefast
 
 
 ## A transition that is used after a game has been loaded.
