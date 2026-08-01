@@ -226,12 +226,76 @@ screen flyai2:
     add "images/flyerai.png":
         xpos -400
 
+transform blobbers():
+    subpixel True
+    zoom 1.1
+    linear 1.0 xoffset 2
+    linear 1.0 xoffset -2
+    repeat 
+
+transform endchars():
+    subpixel True
+    linear 1.0 yoffset -6
+    linear 1.0 yoffset 6
+    repeat
+
 screen endscreen():
-    add "images/bg lightcyan.png"
-    if itsbrover:
-        # it's over 
+    # add "images/bg lightcyan.png"
+    # scuffed if/else statements skull
+
+    if held_painting == "hat":
+        add "images/paintings/someartblob.png":
+            at blobbers()
+        add TrackCursor("images/paintings/hat.png",50):
+            zoom 0.3
+            xalign 0.35
+            yalign 0.45
+        add "images/paintings/someartcharacters.png":
+            at endchars()
+    elif held_painting == "moonshy":
+        add "images/paintings/someartblob.png":
+            at blobbers()
+        add TrackCursor("images/paintings/moonshy.png",50):
+            zoom 0.5
+            xalign 0.55
+            yalign 0.55
+        add "images/paintings/someartcharacters.png":
+            at endchars()
+
+    # elif held_food != "":
+
+
+    elif itsbrover:
+        add "images/paintings/failblob.png":
+            at blobbers()
         
+        # it's over 
+        add TrackCursor("images/paintings/failtext.png", 40)
+        add "images/paintings/failcharacters.png":
+            at endchars()
+
     # check for held flyer and held food
+
+    elif held_painting == "meta":
+        add "images/paintings/bestblob.png":
+            at blobbers()
+        add TrackCursor("images/paintings/pmeta.png",50):
+            zoom 0.3
+            xalign 0.3
+            yalign 0.3
+        add "images/paintings/bestcharacters.png":
+            at endchars()
+
+    elif held_painting == "heaven":
+        add "images/paintings/bestblob.png":
+            at blobbers()
+        add TrackCursor("images/paintings/pheaven.png",50):
+            zoom 0.4
+            xalign 0.35
+            yalign 0.2
+        add "images/paintings/bestcharacters.png":
+            at endchars()
+
 
 
     add TrackCursor("gui/particles.png",20)

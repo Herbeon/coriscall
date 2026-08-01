@@ -22,7 +22,7 @@ define itsbrover = False
 
 define held_flyer = ""
 define held_food = ""
-define held_painting = ""
+define held_painting = "moonshy"
 
 define lst_foods = []
 define finalfood = ""
@@ -115,7 +115,15 @@ label start:
     $ renpy.notify("part 1: the call")
     stop music fadeout 1.0
 
-    jump fast_gallery_entrance
+    window hide 
+    scene bg lightcyan 
+    play music theme2 fadein 1.0 loop fadeout 1.0
+    show screen endscreen 
+    with dissolve 
+
+    pause 
+
+    return 
     show ringy1
     q "ring"
 
@@ -1283,6 +1291,7 @@ label got_best_painting_ending:
     $ global fullywon
     $ persistent.fullywon = True 
     window hide 
+    scene bg lightcyan 
     play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
@@ -1391,7 +1400,7 @@ label successful_ending:
     c "What?"
     show hungry smiling with dissolve 
     h "{color=#fd6692}create{/color} something for me, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}!"
-    scene bg dark
+    scene bg verydark
     with dissolve
 
     window hide 
@@ -1574,6 +1583,7 @@ label actually_over:
     $ global itsbrover
     $ itsbrover = True 
     window hide 
+    scene bg verydark
     play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
