@@ -22,7 +22,7 @@ define itsbrover = False
 
 define held_flyer = ""
 define held_food = ""
-define held_painting = "moonshy"
+define held_painting = ""
 
 define lst_foods = []
 define finalfood = ""
@@ -115,15 +115,6 @@ label start:
     $ renpy.notify("part 1: the call")
     stop music fadeout 1.0
 
-    window hide 
-    scene bg lightcyan 
-    play music theme2 fadein 1.0 loop fadeout 1.0
-    show screen endscreen 
-    with dissolve 
-
-    pause 
-
-    return 
     show ringy1
     q "ring"
 
@@ -727,6 +718,7 @@ label flyer_job:
     c "Um. You're welcome."
 
     window hide 
+    scene bg lightcyan
     play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 
@@ -839,6 +831,7 @@ label flyer_design:
     h "yea."
 
     window hide 
+    scene bg lightcyan 
     play music theme2 fadein 1.0 loop fadeout 1.0
     show screen endscreen 
     with dissolve 

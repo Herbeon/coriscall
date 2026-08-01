@@ -263,7 +263,32 @@ screen endscreen():
             at endchars()
 
     # elif held_food != "":
+    elif held_flyer != "":
+        add "images/paintings/somehowblob.png":
+            at blobbers()
+        add TrackCursor("images/paintings/somehowtext.png",30)
+        add "images/paintings/somehowcharacters.png":
+            at endchars()
 
+        if held_flyer == "ai":
+            add TrackCursor("images/flyerai.png",50):
+                zoom 1.0
+                xoffset -150
+        elif held_flyer == "design":
+            add TrackCursor("images/flyerdesign.png",50):
+                zoom 1.0
+                xoffset -630
+                yoffset 100
+        elif held_flyer == "study":
+            add TrackCursor("images/flyerstudy.png",50):
+                zoom 1.0
+                xoffset -300
+                yoffset 370
+        elif held_flyer == "job":
+            add TrackCursor("images/flyerjob.png",50):
+                zoom 1.0
+                xoffset 70
+                yoffset 310
 
     elif itsbrover:
         add "images/paintings/failblob.png":
@@ -296,6 +321,9 @@ screen endscreen():
         add "images/paintings/bestcharacters.png":
             at endchars()
 
+    if held_food != "":
+        add "images/paintings/extrafoodtext.png":
+            at endchars()
 
 
     add TrackCursor("gui/particles.png",20)
