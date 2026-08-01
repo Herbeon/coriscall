@@ -64,7 +64,7 @@ define decisiveness = "2"
 define speeddone = "fast"
 # more clicking through = becomes slow
 
-define persistent.fullywon = None
+default persistent.fullywon = None
 define endingtype = ""
 # the failure, the 
 define endingdesc = ""
@@ -166,15 +166,14 @@ label the_customer:
     show hey3 
     q "..."
 
-    jump failure_ending
     q "right. I was told you wouldn't talk much."
     show hey4 
     with dissolve
     q "hi, {outlinecolor=#fd6692}{color=#c3f55b}CORI{/color}{/outlinecolor}."
-    show hey5
+    # show hey5
     with dissolve 
     q "you do food delivery even at 4:33 am."
-    show hey6
+    # show hey6
     q "please accept my order."
     show hey7
     with dissolve
@@ -244,7 +243,10 @@ label from_the_ringing:
     h "HEY."
     if hungup > 0:
         show hungry angry with smallsquish
-        h "WHY'D YOU HANG UP ON ME [hungup] TIMES??"
+        if hungup == 1:
+            h "WHY'D YOU HANG UP ON ME ONCE??"
+        else:
+            h "WHY'D YOU HANG UP ON ME [hungup] TIMES??"
     h "..."
     show hungry yapping with smallsquish 
     h "right. I was told you wouldn't talk much."
@@ -410,7 +412,6 @@ label understanding_alone:
     c "This customer is too difficult."
     show cori neutral:
         zoom 1.0
-    # TIE UP
     c "I guess I'll just go to the nearest art gallery."
     jump fast_gallery_entrance
 
@@ -642,6 +643,7 @@ label noneflyer:
 
 label back_from_the_galleria:
     scene bg lightground
+    with dissolve
     show cori neutral with corisquish 
     c "Hi, hungry bunny."
     show hungry hungry with smallsquish
@@ -903,7 +905,7 @@ label got_nothing_from_galleria:
     show hungry angry with smallsquish
     h "not that you would KNOW, because you didn't bother to LISTEN to my guidance!"
     scene bg lightground
-    show hungry frowning with smallsquish
+    show hungry unamused with smallsquish
     show cori neutral
     h "did you at least bring any options?"
     show cori frowning 
@@ -1157,7 +1159,7 @@ label understanding_the_order:
     show cori neutral 
     c "That still sounds difficult. I'm just a mailman."
 
-    show hungry smilling with smallsquish
+    show hungry smiling with smallsquish
     h "yea, and I'm just asking for a delivery."
     show cori thinking 
     c "Do you accept other forms of art? Photography, music, furniture, dance?"
@@ -1198,7 +1200,6 @@ label no_invading_gallery:
 menu think_more_or_go:
     c "I understand..."
     "I'll go to the nearest gallery now.":
-        # tie up
         jump mid_gallery_entrance
     "Just let me think about it a bit more.":
         # tie up. not too much thinking but a bit of thinking is what will do

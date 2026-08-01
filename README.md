@@ -6,10 +6,10 @@ A visual novel about Cori, a delivery rabbit who receives a prank call. because 
 ![second screenshot of game: a screen, a thinking cori and a collection of foods](screenshot2.png)
 
 # how I made this
-I first thought of this mini vn idea in April 2026, and intended to finish that month. I didn't end up finishing in april because I procrastinated lol. I picked this up in July with intentions to make a "mini visual novel," but I accidentally became too invested. I used Renpy for the coding, and Krita to make the art. No AI was used, just a bunch of tutorials and documentation :D When I've shipped this game I'll use itch.io to publish! 
+I first thought of this mini vn idea in April 2026, and intended to finish that month. I didn't end up finishing in april because I procrastinated lol. I picked this up in July with intentions to make a "mini visual novel" for [Horizons](https://horizons.hackclub.com/) but I accidentally became too invested. I used Renpy for the coding, and Krita to make the art. Over the course of the past two weeks, I spent nearly 30 hours making this game: 25 programming, 5 on art. No AI was used, just a bunch of tutorials and documentation :D This game can be played in your browser on itch.io!
 
 # how to play
-web playable will be available on itch.io! Not mobile friendly unfortunately. All you need to do is press the buttons and click through the game!
+[Click this link for the web playable on itch!](https://herbeon.itch.io/coris-call) Not mobile friendly unfortunately. All you need to do is press the buttons and click through the game!
 
 # cool features
 I wanted to try to do some more technical things in this vn, and get deeper into Renpy!
@@ -20,6 +20,7 @@ I wanted to try to do some more technical things in this vn, and get deeper into
 # stuff I'd like to add
 * interactive ending screens!
 * finish the two endings that are currently half-complete (the gallery ones)
+* make the backgrounds and cutscenes not a set of scribbles lol
 * maybe gui update
 * then, maybe minigames
 * oh and maybe sound effects or stuff hmm

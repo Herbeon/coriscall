@@ -89,7 +89,7 @@ default mixes = {
 
 default crossed = set()
 
-screen foodoptions:
+screen foodoptions():
 
     add "gui/textbox.png":
         xalign 0.5
@@ -160,7 +160,7 @@ screen foodscreen(helpmeplease):
         yalign 0.4
         zoom 2.5
         
-screen takeflyers:
+screen takeflyers():
     imagebutton:
         idle "images/flyerjob.png"
         hover "images/flyerjobh.png"
@@ -197,32 +197,32 @@ screen takeflyers:
     #     at loadbut(0.2)
     #     alt "Load"
     #     focus_mask True 
-screen flyjob:
+screen flyjob():
     add "images/flyerjob.png"
 
-screen flyjob2:
+screen flyjob2():
     add "images/flyerjob.png":
         xpos -400
 
-screen flystudy:
+screen flystudy():
     add "images/flyerstudy.png"
 
-screen flystudy2:
+screen flystudy2():
     add "images/flyerstudy.png":
         xpos -550
         ypos 300
 
-screen flydesign:
+screen flydesign():
     add "images/flyerdesign.png"
 
-screen flydesign2:
+screen flydesign2():
     add "images/flyerdesign.png":
         xpos -800
 
-screen flyai:
+screen flyai():
     add "images/flyerai.png"
 
-screen flyai2:
+screen flyai2():
     add "images/flyerai.png":
         xpos -400
 
@@ -264,6 +264,7 @@ screen endscreen():
 
     # elif held_food != "":
     elif held_flyer != "":
+        add "images/bg lightcyan.png"
         add "images/paintings/somehowblob.png":
             at blobbers()
         add TrackCursor("images/paintings/somehowtext.png",30)
