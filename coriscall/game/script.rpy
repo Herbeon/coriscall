@@ -940,7 +940,7 @@ menu shops_what_do:
         show cori determined with corisquish 
         c "I just need to be speedy!"
         $ global speeddone
-        $ speeddone = mid 
+        $ speeddone = "mid" 
         scene bg dark 
         with dissolve 
         jump named_galleria
