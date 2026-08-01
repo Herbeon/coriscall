@@ -1,9 +1,7 @@
-﻿$ import random 
-# The script of the game goes in this file.
+﻿# The script of the game goes in this file.
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
-
 
 define c = Character("CORI",color="#c3f55b", who_outlines = [(3,"#fd6692",0,1)])
 # cori does a neutral sprite by default, when she's not talking. also doesn't corisquish that much, only squish for impactful dialogue
@@ -16,7 +14,7 @@ define q = Character("???", color = "#250e6d",what_outlines=[(2,"#efedfd",0,0)])
 define hungup = 0
 define donesofar = 0
 define guided = False
-define restarted = 0
+default restarted = 0
 
 define itsbrover = False
 
@@ -110,6 +108,10 @@ define audio.theme2 = "audio/more peculiar delivery.wav"
 # The game starts here.
 
 label start:
+    $ global held_flyer, held_food, held_painting
+    $ held_flyer = ""
+    $ held_food = ""
+    $ held_painting = ""
     scene bg dark
     with dissolve
     $ renpy.notify("part 1: the call")
@@ -458,8 +460,6 @@ label named_galleria:
     ]
 
     jump cross_foods_out
-
-
 
 label cross_foods_out:
     # honestly could make this a drag/drop
@@ -1467,7 +1467,7 @@ label short_explanation:
     show cori frowning 
     show hungry neutral with smallsquish
     h "hey, you wanted the short explanation."
-    scene bg dark
+    scene bg verydark
     with fade 
     jump try_again
 

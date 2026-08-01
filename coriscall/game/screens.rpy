@@ -326,6 +326,10 @@ screen endscreen():
         add "images/paintings/extrafoodtext.png":
             at endchars()
 
+    if restarted > 0:
+        add Text("restarts: " + str(restarted)):
+            xalign 1.0
+            yalign 0.0
 
     add TrackCursor("gui/particles.png",20)
     add TrackCursor("gui/particles2.png", 10):
